@@ -23,7 +23,10 @@ class PrometheusTextParser {
     private fun handleDirective(line: String) {
         val parts = line.split(" ", limit = 3)
         if (parts.size >= 3 && parts[1] == "TYPE") {
-            typeMap[parts[2]] = parts.getOrElse(2) { "" }
+            val metricAndType = parts[2].split(" ", limit = 2)
+            val metric = metricAndType.getOrElse(0) { "" }
+            val type = metricAndType.getOrElse(1) { "" }
+            typeMap[metric] = type
         }
     }
 
