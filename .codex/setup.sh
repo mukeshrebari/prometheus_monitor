@@ -3,10 +3,9 @@ set -euo pipefail
 
 # ---------- base tools ----------
 apt-get update -qq
-DEBIAN_FRONTEND=noninteractive \
-  apt-get install -y --no-install-recommends \
-    openjdk-17-jdk git curl wget unzip build-essential \
-    lib32stdc++6 lib32z1 python3-pip
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  openjdk-17-jdk git curl wget unzip build-essential \
+  lib32stdc++6 lib32z1 python3.12 python3.12-venv python3-pip
 
 # ---------- Android CLI tools ----------
 ANDROID_HOME=/opt/android
@@ -16,18 +15,17 @@ wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708
 unzip -q cmdtools.zip -d cmdline-tools && rm cmdtools.zip
 export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin:$ANDROID_HOME/platform-tools
 yes | sdkmanager --licenses
-sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0" \
-                     "cmdline-tools;latest"                                                            # Accepts licences non-interactively
+sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0" "cmdline-tools;latest"
 
 # ---------- Gradle & Kotlin ----------
 curl -s https://get.sdkman.io | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install gradle 8.8
-sdk install kotlin 2.0.0                                                                              # SDKMAN works well in headless scripts :contentReference[oaicite:2]{index=2}
+sdk install kotlin 2.0.0
 
-# ---------- Node 20 (for ComposeCharts demo server if needed) ----------
+# ---------- Node 20 ----------
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-apt-get install -y nodejs                                                                             # Node 20 is LTS and matches Codex universal options :contentReference[oaicite:3]{index=3}
+apt-get install -y nodejs
 
 # ---------- Python data stack ----------
 pip install --no-cache-dir numpy pandas matplotlib scipy
