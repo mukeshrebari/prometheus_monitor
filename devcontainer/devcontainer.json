@@ -1,0 +1,19 @@
+{
+  "name": "Prometheus Mobile Monitor",
+  "dockerFile": "Dockerfile",
+  "postCreateCommand": "gradle --version && echo 'Dev container ready 🐳'",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": { "version": "17" },
+    "ghcr.io/devcontainers/features/gradle:1": { "version": "8.8" },
+    "ghcr.io/devcontainers/features/node:1":   { "version": "20" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-androidtools.vscode-android",
+        "JetBrains.kotlin",
+        "ms-python.python"
+      ]
+    }
+  }
+}
