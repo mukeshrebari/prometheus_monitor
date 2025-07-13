@@ -31,8 +31,7 @@ class PrometheusTextParser {
     }
 
     private fun parseSample(line: String): SampleRecord? {
-        val regex = Regex("^([a-zA-Z_:][a-zA-Z0-9_:]*)\\s*(\{[^}]*\})?\\s+([+-]?[0-9.]+)(?:\\s+(\\d+))?")
-        val match = regex.matchEntire(line) ?: return null
+        val match = REGEX.matchEntire(line) ?: return null
         val metric = match.groupValues[1]
         val labelPart = match.groupValues[2]
         val value = match.groupValues[3].toDouble()
