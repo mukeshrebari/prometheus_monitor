@@ -1,0 +1,47 @@
+{
+  "name": "Prometheus Mobile Monitor",
+  "dockerFile": "Dockerfile",
+  "userEnvProbe": "loginInteractiveShell",
+  "containerEnv": {
+    "GRADLE_USER_HOME": "/home/vscode/.gradle"
+  },
+  "postCreateCommand": "gradle --version && echo 'Dev container ready 🐳'",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": { "version": "17" },
+    "ghcr.io/devcontainers-extra/features/gradle:1": { "version": "8.12.1" },
+    "ghcr.io/devcontainers-extra/features/node:1": { "version": "20" },
+    "ghcr.io/devcontainers-extra/features/git:1": {},
+    "ghcr.io/devcontainers-extra/features/android-sdk:1": {"version": "33.0.0" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-androidtools.vscode-android",
+        "JetBrains.kotlin",
+        "ms-python.python",
+        "ms-vscode.gradle"
+      ]
+    }
+  },
+  // Enhanced port configuration
+  "portsAttributes": {
+    "3000": {
+      "label": "Frontend Dev Server",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Backend API",
+      "onAutoForward": "notify"
+    },
+    "9090": {
+      "label": "Prometheus",
+      "onAutoForward": "silent"
+    }
+  },
+  // Add mounts for better performance
+  "mounts": [
+    "source=gradle-cache,target=/home/vscode/.gradle,type=volume",
+    "source=android-sdk-cache,target=/home/vscode/.android,type=volume"
+  ],
+  "remoteUser": "vscode"
+}
